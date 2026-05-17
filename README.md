@@ -128,6 +128,9 @@ Displays the official HKUST 4.0 grade scale:
 6. Your calculator will be available at: `https://your-username.github.io/HKUST-CSE-FYP-Grade-Calculator/`
 
 For this project, the live URL is:
+`https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/index.html`
+
+Root URL (also works):
 `https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/`
 
 ### Option 2: Netlify (Free)
