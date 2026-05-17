@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CSE FYP Grade Calculator</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14px;
+      background: #fff;
+      color: #000;
+      padding: 20px 30px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 4px;
+    }
+
+    h2.subtitle {
+      text-align: center;
+      font-size: 15px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    hr { border: none; border-top: 1px solid #000; margin-bottom: 20px; }
+
+    /* ── two-column layout ── */
+    .layout {
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .left-panel  { flex: 0 0 260px; }
+    .right-panel { flex: 1; }
+
+    /* ── grade scale reference ── */
+    .scale-box {
+      border: 1px solid #999;
+      padding: 10px 14px;
+      margin-bottom: 18px;
+    }
+
+    .scale-box h3 {
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    .scale-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .scale-table th {
+      background: #e8e8e8;
+      padding: 3px 6px;
+      border: 1px solid #aaa;
+      text-align: center;
+    }
+
+    .scale-table td {
+      padding: 3px 6px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    .scale-table tr.highlight td { background: #fffbe6; font-weight: bold; }
+
+    /* ── grading panels ── */
+    .section-title {
+      font-weight: bold;
+      font-size: 14px;
+      background: #d9d9d9;
+      padding: 5px 10px;
+      border: 1px solid #999;
+      margin-bottom: 0;
+    }
+
+    .grade-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .grade-table th {
+      background: #efefef;
+      padding: 5px 8px;
+      border: 1px solid #aaa;
+      text-align: center;
+      font-size: 12px;
+    }
+
+    .grade-table td {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+      vertical-align: middle;
+    }
+
+    .grade-table td:nth-child(2) { text-align: center; width: 60px; }
+    .grade-table td:nth-child(3) { text-align: center; width: 110px; }
+    .grade-table td:nth-child(4) { text-align: center; width: 100px; color: #555; }
+
+    .grade-table select {
+      width: 90px;
+      padding: 2px 4px;
+      font-size: 13px;
+      font-family: inherit;
+      border: 1px solid #aaa;
+    }
+
+    .total-row td {
+      background: #f0f0f0;
+      font-weight: bold;
+      border-top: 2px solid #888;
+    }
+
+    /* ── ratio labels ── */
+    .ratio-note {
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 4px;
+      padding-left: 2px;
+    }
+
+    /* ── calculate button ── */
+    .btn-row {
+      text-align: center;
+      margin: 12px 0 20px;
+    }
+
+    button#calcBtn {
+      padding: 6px 28px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #555;
+    }
+
+    button#calcBtn:hover { background: #e8e8e8; }
+
+    /* ── results ── */
+    #results { display: none; }
+
+    .result-section {
+      border: 1px solid #aaa;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+    }
+
+    .result-section h3 {
+      font-size: 14px;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #ccc;
+      padding-bottom: 4px;
+    }
+
+    .result-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .result-table th {
+      background: #e4e4e4;
+      padding: 4px 8px;
+      border: 1px solid #aaa;
+      text-align: center;
+    }
+
+    .result-table td {
+      padding: 4px 8px;
+      border: 1px solid #ccc;
+    }
+
+    .result-table td:nth-child(2),
+    .result-table td:nth-child(3),
+    .result-table td:nth-child(4) { text-align: center; }
+
+    .result-table tr.total-row td {
+      font-weight: bold;
+      background: #f0f0f0;
+      border-top: 2px solid #888;
+    }
+
+    .final-box {
+      border: 2px solid #555;
+      padding: 14px 20px;
+      text-align: center;
+      font-size: 15px;
+      background: #fafafa;
+    }
+
+    .final-box .score-line { margin: 4px 0; }
+    .final-box .grade-big  { font-size: 36px; font-weight: bold; margin: 8px 0; }
+
+    .calc-row { margin: 4px 0; font-size: 13px; color: #333; }
+
+    /* highlight matched grade range row */
+    .scale-table tr.active-grade td {
+      background: #c8e6c9 !important;
+      font-weight: bold;
+    }
+
+    /* ── component header rows ── */
+    .comp-row > td {
+      background: #eaf0f8;
+      border-top: 2px solid #7a9cc0;
+      padding: 6px 8px;
+    }
+
+    .auto-note {
+      display: block;
+      font-size: 10px;
+      font-weight: normal;
+      color: #777;
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .pending { color: #aaa; font-style: italic; }
+    .calc-grade { font-size: 15px; color: #1a5c1a; font-weight: bold; }
+
+    /* ── sub-criteria rows ── */
+    .sub-row > td { background: #fff; vertical-align: middle; }
+
+    .sub-cell {
+      padding-left: 22px !important;
+      font-size: 12px;
+      color: #444;
+      border-left: 3px solid #b0c8e0 !important;
+      font-style: italic;
+    }
+
+    .sub-wt-cell { font-size: 11px; color: #666; font-weight: bold; text-align: center; }
+    .tcenter { text-align: center; }
+
+    /* ── HKUST header ── */
+    h1.hkust {
+      font-size: 16px;
+      font-weight: normal;
+      font-style: italic;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+  </style>
+</head>
+<body>
+
+<h1 class="hkust">The Hong Kong University of Science and Technology</h1>
+<h1>CSE Final Year Project Management System</h1>
+<h2 class="subtitle">FYP Grade Calculator</h2>
+<hr />
+
+<div class="layout">
+
+  <!-- LEFT: grade scale reference -->
+  <div class="left-panel">
+    <div class="scale-box">
+      <h3>Grade Scale Reference</h3>
+      <table class="scale-table" id="scaleTable">
+        <thead>
+          <tr>
+            <th>Grade</th>
+            <th>Points</th>
+            <th>Score Range</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="sr-Ap"><td>A+</td><td>4.30</td><td>≥ 4.15</td></tr>
+          <tr id="sr-A" ><td>A</td> <td>4.00</td><td>3.85 – 4.14</td></tr>
+          <tr id="sr-Am"><td>A-</td><td>3.70</td><td>3.50 – 3.84</td></tr>
+          <tr id="sr-Bp"><td>B+</td><td>3.30</td><td>3.15 – 3.49</td></tr>
+          <tr id="sr-B" ><td>B</td> <td>3.00</td><td>2.85 – 3.14</td></tr>
+          <tr id="sr-Bm"><td>B-</td><td>2.70</td><td>2.50 – 2.84</td></tr>
+          <tr id="sr-Cp"><td>C+</td><td>2.30</td><td>2.15 – 2.49</td></tr>
+          <tr id="sr-C" ><td>C</td> <td>2.00</td><td>1.85 – 2.14</td></tr>
+          <tr id="sr-Cm"><td>C-</td><td>1.70</td><td>1.50 – 1.84</td></tr>
+          <tr id="sr-D" ><td>D</td> <td>1.00</td><td>1.00 – 1.49</td></tr>
+          <tr id="sr-F" ><td>F</td> <td>0.00</td><td>0.00 – 0.99</td></tr>
+        </tbody>
+      </table>
+      <p style="font-size:11px;color:#555;margin-top:8px;">
+        Step 1: Letter grades → points<br>
+        Step 2: Weighted sum computed<br>
+        Step 3: Score → closest letter grade
+      </p>
+    </div>
+
+    <div class="scale-box">
+      <h3>Weight Summary</h3>
+      <table class="scale-table">
+        <thead><tr><th>Role</th><th>Final Weight</th></tr></thead>
+        <tbody>
+          <tr><td>Advisor</td><td>60%</td></tr>
+          <tr><td>Reader</td><td>40%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- RIGHT: input form -->
+  <div class="right-panel">
+
+    <!-- Advisor -->
+    <p class="ratio-note">Advisor Assessment — contributes <strong>60%</strong> to final score</p>
+    <div class="section-title">Advisor Grading</div>
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Component / Criterion</th>
+          <th>Weight</th>
+          <th>Grade</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody id="adv_tbody"></tbody>
+    </table>
+
+    <!-- Reader -->
+    <p class="ratio-note">Reader Assessment — contributes <strong>40%</strong> to final score</p>
+    <div class="section-title">Reader Grading</div>
+    <table class="grade-table">
+      <thead>
+        <tr>
+          <th style="text-align:left;">Component / Criterion</th>
+          <th>Weight</th>
+          <th>Grade</th>
+          <th>Points</th>
+        </tr>
+      </thead>
+      <tbody id="read_tbody"></tbody>
+    </table>
+
+    <div class="btn-row">
+      <button id="calcBtn" onclick="calculate()">Calculate Grade</button>
+      &nbsp;
+      <button onclick="resetAll()" style="padding:6px 20px;font-size:14px;font-family:inherit;cursor:pointer;background:#fff;border:1px solid #555;">Reset</button>
+    </div>
+
+    <!-- Results -->
+    <div id="results">
+
+      <div class="result-section">
+        <h3>Advisor Grading Breakdown &nbsp;<span style="font-weight:normal;font-size:12px;">(60% of final score)</span></h3>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Component</th>
+              <th>Weight</th>
+              <th>Points (Grade)</th>
+              <th>Weighted Score</th>
+            </tr>
+          </thead>
+          <tbody id="adv_result_rows"></tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td>Advisor Total</td>
+              <td>100%</td>
+              <td id="adv_total_letter"></td>
+              <td id="adv_total_score"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="result-section">
+        <h3>Reader Grading Breakdown &nbsp;<span style="font-weight:normal;font-size:12px;">(40% of final score)</span></h3>
+        <table class="result-table">
+          <thead>
+            <tr>
+              <th style="text-align:left;">Component</th>
+              <th>Weight</th>
+              <th>Points (Grade)</th>
+              <th>Weighted Score</th>
+            </tr>
+          </thead>
+          <tbody id="read_result_rows"></tbody>
+          <tfoot>
+            <tr class="total-row">
+              <td>Reader Total</td>
+              <td>100%</td>
+              <td id="read_total_letter"></td>
+              <td id="read_total_score"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      <div class="result-section">
+        <h3>Final Score Calculation</h3>
+        <div class="calc-row" id="calc_adv_line"></div>
+        <div class="calc-row" id="calc_read_line"></div>
+        <hr style="margin:10px 0;border-color:#ccc;" />
+        <div class="final-box">
+          <div class="score-line" id="final_score_line"></div>
+          <div class="grade-big" id="final_grade_big"></div>
+          <div style="font-size:12px;color:#555;" id="final_range_line"></div>
+        </div>
+      </div>
+
+    </div><!-- /results -->
+  </div><!-- /right-panel -->
+</div><!-- /layout -->
+
+<script>
+  // ── grade / scale data ───────────────────────────────────────────────────
+  const GRADES = [
+    { letter: "A+", points: 4.30 },
+    { letter: "A",  points: 4.00 },
+    { letter: "A-", points: 3.70 },
+    { letter: "B+", points: 3.30 },
+    { letter: "B",  points: 3.00 },
+    { letter: "B-", points: 2.70 },
+    { letter: "C+", points: 2.30 },
+    { letter: "C",  points: 2.00 },
+    { letter: "C-", points: 1.70 },
+    { letter: "D",  points: 1.00 },
+    { letter: "F",  points: 0.00 },
+  ];
+
+  const SCALE = [
+    { min: 4.15, letter: "A+", rowId: "sr-Ap" },
+    { min: 3.85, letter: "A",  rowId: "sr-A"  },
+    { min: 3.50, letter: "A-", rowId: "sr-Am" },
+    { min: 3.15, letter: "B+", rowId: "sr-Bp" },
+    { min: 2.85, letter: "B",  rowId: "sr-B"  },
+    { min: 2.50, letter: "B-", rowId: "sr-Bm" },
+    { min: 2.15, letter: "C+", rowId: "sr-Cp" },
+    { min: 1.85, letter: "C",  rowId: "sr-C"  },
+    { min: 1.50, letter: "C-", rowId: "sr-Cm" },
+    { min: 1.00, letter: "D",  rowId: "sr-D"  },
+    { min: 0.00, letter: "F",  rowId: "sr-F"  },
+  ];
+
+  function pointsToLetter(p) {
+    for (const s of SCALE) if (p >= s.min) return s.letter;
+    return "F";
+  }
+
+  // ── component & criteria definitions ─────────────────────────────────────
+  const COMPONENTS = {
+    advisor: [
+      {
+        id: "adv_prop", label: "Project Proposal Report", compWeight: 0.05,
+        criteria: [
+          { id: "adv_prop_c1", label: "Project objective formulation, methodology & background", weight: 0.60 },
+          { id: "adv_prop_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "adv_prop_c3", label: "Planning of future work", weight: 0.10 },
+        ]
+      },
+      {
+        id: "adv_ethics", label: "Individual Ethics Essay", compWeight: 0.05,
+        criteria: [
+          { id: "adv_ethics_c1", label: "Content",   weight: 0.40 },
+          { id: "adv_ethics_c2", label: "Clarity",   weight: 0.30 },
+          { id: "adv_ethics_c3", label: "Relevance", weight: 0.30 },
+        ]
+      },
+      {
+        id: "adv_prog", label: "Project Progress Report", compWeight: 0.20,
+        criteria: [
+          { id: "adv_prog_c1", label: "Work completed", weight: 0.60 },
+          { id: "adv_prog_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "adv_prog_c3", label: "Use of software engineering techniques", weight: 0.10 },
+        ]
+      },
+      {
+        id: "adv_final", label: "Final Project Report", compWeight: 0.35,
+        criteria: [
+          { id: "adv_final_c1", label: "Results obtained", weight: 0.60 },
+          { id: "adv_final_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "adv_final_c3", label: "Use of software engineering techniques", weight: 0.10 },
+        ]
+      },
+      {
+        id: "adv_oral", label: "Oral Presentation", compWeight: 0.30,
+        criteria: [
+          { id: "adv_oral_c1", label: "Project demonstration", weight: 0.40 },
+          { id: "adv_oral_c2", label: "Delivery (oral, audience contact, slides, timing)", weight: 0.40 },
+          { id: "adv_oral_c3", label: "Quality of answers", weight: 0.20 },
+        ]
+      },
+      {
+        id: "adv_monthly", label: "Monthly Reports", compWeight: 0.05,
+        criteria: [
+          { id: "adv_monthly_c1", label: "Each monthly report (equal weight across reports)", weight: 1.00 },
+        ]
+      },
+    ],
+    reader: [
+      {
+        id: "read_prop", label: "Project Proposal Report", compWeight: 0.05,
+        criteria: [
+          { id: "read_prop_c1", label: "Project objective formulation, methodology & background", weight: 0.60 },
+          { id: "read_prop_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "read_prop_c3", label: "Planning of future work", weight: 0.10 },
+        ]
+      },
+      {
+        id: "read_prog", label: "Project Progress Report", compWeight: 0.15,
+        criteria: [
+          { id: "read_prog_c1", label: "Work completed", weight: 0.60 },
+          { id: "read_prog_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "read_prog_c3", label: "Use of software engineering techniques", weight: 0.10 },
+        ]
+      },
+      {
+        id: "read_final", label: "Final Project Report", compWeight: 0.35,
+        criteria: [
+          { id: "read_final_c1", label: "Results obtained", weight: 0.60 },
+          { id: "read_final_c2", label: "Clarity & presentation (organization, English)", weight: 0.30 },
+          { id: "read_final_c3", label: "Use of software engineering techniques", weight: 0.10 },
+        ]
+      },
+      {
+        id: "read_oral", label: "Oral Presentation", compWeight: 0.40,
+        criteria: [
+          { id: "read_oral_c1", label: "Project demonstration", weight: 0.40 },
+          { id: "read_oral_c2", label: "Delivery (oral, audience contact, slides, timing)", weight: 0.40 },
+          { id: "read_oral_c3", label: "Quality of answers", weight: 0.20 },
+        ]
+      },
+      {
+        id: "read_video", label: "Poster Session / Video Trailer", compWeight: 0.05,
+        criteria: [
+          { id: "read_video_c1", label: "Clarity & presentation of poster / video", weight: 0.50 },
+          { id: "read_video_c2", label: "Information conveyed", weight: 0.50 },
+        ]
+      },
+    ]
+  };
+
+  // ── build a grade <select> element ───────────────────────────────────────
+  function makeSelect(id, onChangeFn) {
+    const sel = document.createElement("select");
+    sel.id = id;
+    sel.addEventListener("change", onChangeFn);
+    const def = document.createElement("option");
+    def.value = ""; def.textContent = "--";
+    sel.appendChild(def);
+    GRADES.forEach(g => {
+      const opt = document.createElement("option");
+      opt.value = g.points;
+      opt.textContent = `${g.letter} (${g.points.toFixed(2)})`;
+      sel.appendChild(opt);
+    });
+    return sel;
+  }
+
+  // ── dynamically build table rows ──────────────────────────────────────────
+  function buildTable(tbodyId, components) {
+    const tbody = document.getElementById(tbodyId);
+    tbody.innerHTML = "";
+    components.forEach(comp => {
+      // Component summary row (auto-calculated)
+      const compRow = document.createElement("tr");
+      compRow.className = "comp-row";
+      compRow.innerHTML = `
+        <td><strong>${comp.label}</strong>
+          <span class="auto-note">↓ auto-calculated from criteria below</span></td>
+        <td class="tcenter">${(comp.compWeight * 100).toFixed(0)}%</td>
+        <td class="tcenter" id="${comp.id}_letter"><em class="pending">fill criteria ↓</em></td>
+        <td class="tcenter" id="${comp.id}_pts"><em class="pending">—</em></td>`;
+      tbody.appendChild(compRow);
+
+      // Sub-criteria rows
+      comp.criteria.forEach(crit => {
+        const subRow = document.createElement("tr");
+        subRow.className = "sub-row";
+
+        const td1 = document.createElement("td");
+        td1.className = "sub-cell";
+        td1.textContent = crit.label;
+
+        const td2 = document.createElement("td");
+        td2.className = "sub-wt-cell";
+        td2.textContent = `${(crit.weight * 100).toFixed(0)}%`;
+
+        const td3 = document.createElement("td");
+        td3.className = "tcenter";
+        td3.appendChild(makeSelect(crit.id, () => {
+          const val = document.getElementById(crit.id).value;
+          document.getElementById(`${crit.id}_pts`).textContent =
+            val !== "" ? parseFloat(val).toFixed(2) : "—";
+          calcComp(comp);
+        }));
+
+        const td4 = document.createElement("td");
+        td4.className = "tcenter";
+        td4.id = `${crit.id}_pts`;
+        td4.textContent = "—";
+
+        subRow.appendChild(td1); subRow.appendChild(td2);
+        subRow.appendChild(td3); subRow.appendChild(td4);
+        tbody.appendChild(subRow);
+      });
+    });
+  }
+
+  // ── auto-calculate component grade from its sub-criteria ─────────────────
+  function calcComp(comp) {
+    let total = 0, allFilled = true;
+    for (const crit of comp.criteria) {
+      const val = document.getElementById(crit.id).value;
+      if (val === "") { allFilled = false; break; }
+      total += parseFloat(val) * crit.weight;
+    }
+    const letterEl = document.getElementById(`${comp.id}_letter`);
+    const ptsEl    = document.getElementById(`${comp.id}_pts`);
+    if (!allFilled) {
+      letterEl.innerHTML  = `<em class="pending">fill criteria ↓</em>`;
+      ptsEl.innerHTML     = `<em class="pending">—</em>`;
+      letterEl.dataset.pts = "";
+    } else {
+      const letter = pointsToLetter(total);
+      letterEl.innerHTML   = `<span class="calc-grade">${letter}</span>`;
+      ptsEl.textContent    = total.toFixed(3);
+      letterEl.dataset.pts = total;
+    }
+  }
+
+  // ── build tables on page load ─────────────────────────────────────────────
+  buildTable("adv_tbody",  COMPONENTS.advisor);
+  buildTable("read_tbody", COMPONENTS.reader);
+
+  // ── calculate final grade ─────────────────────────────────────────────────
+  function calculate() {
+    const allComps = [...COMPONENTS.advisor, ...COMPONENTS.reader];
+    for (const comp of allComps) {
+      for (const crit of comp.criteria) {
+        if (document.getElementById(crit.id).value === "") {
+          alert(`Please fill in all criteria.\nMissing: "${crit.label}"\n(in "${comp.label}")`);
+          return;
+        }
+      }
+    }
+
+    function sectionTotal(components, tbodyId, totalLetterID, totalScoreId) {
+      let total = 0;
+      const tbody = document.getElementById(tbodyId);
+      tbody.innerHTML = "";
+      for (const comp of components) {
+        let compTotal = 0;
+        for (const crit of comp.criteria)
+          compTotal += parseFloat(document.getElementById(crit.id).value) * crit.weight;
+        const weighted = compTotal * comp.compWeight;
+        total += weighted;
+        const letter = pointsToLetter(compTotal);
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${comp.label}</td>
+          <td style="text-align:center">${(comp.compWeight * 100).toFixed(0)}%</td>
+          <td style="text-align:center">${compTotal.toFixed(3)} (${letter})</td>
+          <td style="text-align:center">${weighted.toFixed(4)}</td>`;
+        tbody.appendChild(tr);
+      }
+      document.getElementById(totalLetterID).textContent = pointsToLetter(total);
+      document.getElementById(totalScoreId).textContent  = total.toFixed(4);
+      return total;
+    }
+
+    const advTotal  = sectionTotal(COMPONENTS.advisor, "adv_result_rows",  "adv_total_letter",  "adv_total_score");
+    const readTotal = sectionTotal(COMPONENTS.reader,  "read_result_rows", "read_total_letter", "read_total_score");
+
+    const advContrib  = advTotal  * 0.60;
+    const readContrib = readTotal * 0.40;
+    const finalScore  = advContrib + readContrib;
+    const finalLetter = pointsToLetter(finalScore);
+
+    document.getElementById("calc_adv_line").textContent  =
+      `Advisor contribution: ${advTotal.toFixed(4)} × 60% = ${advContrib.toFixed(4)}`;
+    document.getElementById("calc_read_line").textContent =
+      `Reader  contribution: ${readTotal.toFixed(4)} × 40% = ${readContrib.toFixed(4)}`;
+    document.getElementById("final_score_line").textContent = `Final Score: ${finalScore.toFixed(4)}`;
+    document.getElementById("final_grade_big").textContent  = finalLetter;
+
+    const entry = SCALE.find(s => finalScore >= s.min);
+    const idx   = SCALE.indexOf(entry);
+    const lower = entry.min.toFixed(2);
+    document.getElementById("final_range_line").textContent =
+      idx === 0 ? `Score ≥ ${lower}` : `Score range: ${lower} – ${(SCALE[idx - 1].min - 0.01).toFixed(2)}`;
+
+    SCALE.forEach(s => {
+      const row = document.getElementById(s.rowId);
+      if (row) row.classList.remove("active-grade");
+    });
+    if (entry) document.getElementById(entry.rowId).classList.add("active-grade");
+
+    document.getElementById("results").style.display = "block";
+    document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+  }
+
+  // ── reset ─────────────────────────────────────────────────────────────────
+  function resetAll() {
+    const allComps = [...COMPONENTS.advisor, ...COMPONENTS.reader];
+    allComps.forEach(comp => {
+      document.getElementById(`${comp.id}_letter`).innerHTML  = `<em class="pending">fill criteria ↓</em>`;
+      document.getElementById(`${comp.id}_pts`).innerHTML     = `<em class="pending">—</em>`;
+      document.getElementById(`${comp.id}_letter`).dataset.pts = "";
+      comp.criteria.forEach(crit => {
+        document.getElementById(crit.id).value = "";
+        document.getElementById(`${crit.id}_pts`).textContent = "—";
+      });
+    });
+    document.getElementById("results").style.display = "none";
+    SCALE.forEach(s => {
+      const row = document.getElementById(s.rowId);
+      if (row) row.classList.remove("active-grade");
+    });
+  }
+</script>
+</body>
+</html>
