@@ -117,48 +117,6 @@ Displays the official HKUST 4.0 grade scale:
 
 ---
 
-## Hosting Options
-
-### Option 1: GitHub Pages (Recommended - Free & Easy)
-1. Create a GitHub account at https://github.com
-2. Create a new repository called `HKUST-CSE-FYP-Grade-Calculator`
-3. Upload `index.html` to the repository
-4. Go to **Settings > Pages > Source**
-5. Select **Main branch**
-6. Your calculator will be available at: `https://your-username.github.io/HKUST-CSE-FYP-Grade-Calculator/`
-
-For this project, the live URL is:
-`https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/index.html`
-
-Root URL (also works):
-`https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/`
-
-### Option 2: Netlify (Free)
-1. Visit https://netlify.com and sign up with GitHub
-2. Drag and drop the `index.html` file
-3. Your site will be live instantly at a Netlify domain
-4. You can set a custom domain if desired
-
-### Option 3: Personal Web Server
-- Upload to your own web hosting provider
-- No special server configuration needed - it's just a static HTML file
-- Can be accessed at: `https://yourdomain.com/`
-
-### Option 4: Self-Host Locally
-- Share the HTML file directly with other students
-- Works completely offline - no internet connection needed
-
----
-
-## Support
-
-For questions about:
-- **Official grading scheme**: Contact CSE Department or visit https://cse.hkust.edu.hk/ug/fyp/grading/
-- **Official grades**: Log into https://fypms.cse.ust.hk/
-- **FYP requirements**: Visit https://cse.hkust.edu.hk/ug/fyp/
-
----
-
 ## Version History
 
 - **v1.0** - Initial release with Advisor and Reader assessment calculator
