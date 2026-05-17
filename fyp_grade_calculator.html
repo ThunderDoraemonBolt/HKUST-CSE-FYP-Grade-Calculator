@@ -376,6 +376,36 @@
     }
 
     button#backBtn:hover { background: #e8e8e8; }
+
+    /* ── Hide layout when results are shown ── */
+    #calculatorPage.show-results .layout {
+      display: none;
+    }
+
+    #calculatorPage.show-results #results {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Footer ── */
+    footer {
+      text-align: right;
+      padding: 20px 30px;
+      font-size: 12px;
+      color: #999;
+      margin-top: 40px;
+      border-top: 1px solid #ddd;
+    }
+
+    footer a {
+      color: #999;
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      color: #555;
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -624,9 +654,11 @@
         ]
       },
       {
-        id: "adv_monthly", label: "Monthly Reports", compWeight: 0.05,
+        id: "adv_monthly", label: "Monthly Reports (3 reports)", compWeight: 0.05,
         criteria: [
-          { id: "adv_monthly_c1", label: "Each monthly report (equal weight across reports)", weight: 1.00 },
+          { id: "adv_monthly_c1", label: "Report 1 - Equal weight across all 3 reports", weight: 1.00 },
+          { id: "adv_monthly_c2", label: "Report 2 - Equal weight across all 3 reports", weight: 1.00 },
+          { id: "adv_monthly_c3", label: "Report 3 - Equal weight across all 3 reports", weight: 1.00 },
         ]
       },
     ],
@@ -813,6 +845,7 @@
     });
     if (entry) document.getElementById(entry.rowId).classList.add("active-grade");
 
+    document.getElementById("calculatorPage").classList.add("show-results");
     document.getElementById("results").style.display = "block";
     document.getElementById("results").scrollIntoView({ behavior: "smooth" });
   }
@@ -829,6 +862,7 @@
         document.getElementById(`${crit.id}_pts`).textContent = "—";
       });
     });
+    document.getElementById("calculatorPage").classList.remove("show-results");
     document.getElementById("results").style.display = "none";
     SCALE.forEach(s => {
       const row = document.getElementById(s.rowId);
@@ -836,5 +870,10 @@
     });
   }
 </script>
+
+<footer>
+  Made by <strong>ThunderDora</strong>
+</footer>
+
 </body>
 </html>
