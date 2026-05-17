@@ -500,7 +500,8 @@
       <p style="font-size:11px;color:#555;margin-top:8px;">
         Step 1: Letter grades → points<br>
         Step 2: Weighted sum computed<br>
-        Step 3: Score → closest letter grade
+        Step 3: 4-decimal score → threshold-based letter grade<br>
+        Example: 3.4999 remains B+
       </p>
     </div>
 
@@ -618,8 +619,13 @@
     { min: 0.00, letter: "F",  rowId: "sr-F"  },
   ];
 
+  function normalizeScore(score) {
+    return Number(score.toFixed(4));
+  }
+
   function pointsToLetter(p) {
-    for (const s of SCALE) if (p >= s.min) return s.letter;
+    const normalizedPoints = normalizeScore(p);
+    for (const s of SCALE) if (normalizedPoints >= s.min) return s.letter;
     return "F";
   }
 
@@ -850,7 +856,7 @@
 
     const advContrib  = advTotal  * 0.60;
     const readContrib = readTotal * 0.40;
-    const finalScore  = advContrib + readContrib;
+    const finalScore  = normalizeScore(advContrib + readContrib);
     const finalLetter = pointsToLetter(finalScore);
 
     document.getElementById("final_score_line").textContent = `Final Score: ${finalScore.toFixed(4)}`;

@@ -62,6 +62,8 @@ Displays the official HKUST 4.0 grade scale:
   - Applicable score range
   - Navigation buttons to start over or return to menu
 
+Boundary handling note: the calculator classifies grades using the displayed 4-decimal final score. For example, `3.4999` is classified as `B+`, while `3.5000` is classified as `A-`.
+
 ---
 
 ## How to Use
@@ -92,7 +94,7 @@ Displays the official HKUST 4.0 grade scale:
 - Advisor contribution: 60% of final score
 - Reader contribution: 40% of final score
 - Each section's score is a weighted average of its components
-- Final score is converted to the closest letter grade using the official scale
+- Final score is rounded to 4 decimal places, then mapped to a letter grade using the official threshold scale
 
 ### Monthly Reports (Advisor)
 - 3 monthly reports with equal weight
