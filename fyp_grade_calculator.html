@@ -257,6 +257,125 @@
       text-align: center;
       margin-bottom: 2px;
     }
+
+    /* ── Menu Page Styles ── */
+    #menuPage {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .menu-section {
+      margin: 30px 0;
+      padding: 20px;
+      border: 1px solid #999;
+      background: #fafafa;
+    }
+
+    .menu-section h2 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      text-align: center;
+      border-bottom: 2px solid #333;
+      padding-bottom: 10px;
+    }
+
+    .menu-section p {
+      line-height: 1.6;
+      font-size: 14px;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .menu-links {
+      list-style-type: none;
+      margin: 15px 0;
+      padding: 0;
+    }
+
+    .menu-links li {
+      margin: 12px 0;
+      padding: 10px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+
+    .menu-links a {
+      color: #0066cc;
+      text-decoration: none;
+      font-size: 13px;
+      word-break: break-all;
+    }
+
+    .menu-links a:hover { text-decoration: underline; }
+
+    .menu-links .link-label {
+      display: block;
+      font-weight: bold;
+      font-size: 14px;
+      color: #000;
+      margin-bottom: 5px;
+    }
+
+    .start-button-container {
+      text-align: center;
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+
+    button#startBtn {
+      padding: 12px 50px;
+      font-size: 16px;
+      font-weight: bold;
+      font-family: inherit;
+      cursor: pointer;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      transition: background 0.3s;
+    }
+
+    button#startBtn:hover { background: #45a049; }
+
+    #calculatorPage { display: none; }
+
+    /* ── Hide extended results, show only final grade ── */
+    .result-section {
+      display: none;
+    }
+
+    .result-section.final-result {
+      display: block;
+      border: 2px solid #555;
+      padding: 20px;
+      text-align: center;
+      background: #fafafa;
+      margin-top: 30px;
+    }
+
+    .result-section.final-result h3 {
+      display: none;
+    }
+
+    /* Back button in results */
+    .result-nav-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    button#backBtn {
+      padding: 8px 25px;
+      font-size: 14px;
+      font-family: inherit;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #555;
+      margin: 0 5px;
+    }
+
+    button#backBtn:hover { background: #e8e8e8; }
   </style>
 </head>
 <body>
@@ -266,6 +385,47 @@
 <h2 class="subtitle">FYP Grade Calculator</h2>
 <hr />
 
+<!-- Menu Page -->
+<div id="menuPage">
+  <div class="menu-section">
+    <h2>Welcome to FYP Grade Calculator</h2>
+    <p>This tool is designed to help you <strong>calculate your final letter grade and numerical value</strong> for your Final Year Project (FYP) based on the grades you receive from your Advisor and Reader.</p>
+  </div>
+
+  <div class="menu-section">
+    <h2>Important Resources</h2>
+    <ul class="menu-links">
+      <li>
+        <span class="link-label">📋 FYP Grading Scheme</span>
+        <a href="https://cse.hkust.edu.hk/ug/fyp/grading/" target="_blank">
+          https://cse.hkust.edu.hk/ug/fyp/grading/
+        </a>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">View the complete grading scheme and criteria used for your FYP assessment.</p>
+      </li>
+      <li>
+        <span class="link-label">🔍 Check Your Grades</span>
+        <a href="https://fypms.cse.ust.hk/" target="_blank">
+          https://fypms.cse.ust.hk/
+        </a>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;"><strong>Note:</strong> You need to commit your project before checking your grades in the system.</p>
+      </li>
+      <li>
+        <span class="link-label">ℹ️ More FYP Information</span>
+        <a href="https://cse.hkust.edu.hk/ug/fyp/" target="_blank">
+          https://cse.hkust.edu.hk/ug/fyp/
+        </a>
+        <p style="font-size: 12px; color: #666; margin-top: 5px;">Learn more about the FYP program, requirements, and deadlines.</p>
+      </li>
+    </ul>
+  </div>
+
+  <div class="start-button-container">
+    <button id="startBtn" onclick="goToCalculator()">Start Calculator →</button>
+  </div>
+</div>
+
+<!-- Calculator Page -->
+<div id="calculatorPage">
 <div class="layout">
 
   <!-- LEFT: grade scale reference -->
@@ -352,72 +512,40 @@
       <button onclick="resetAll()" style="padding:6px 20px;font-size:14px;font-family:inherit;cursor:pointer;background:#fff;border:1px solid #555;">Reset</button>
     </div>
 
-    <!-- Results -->
+    <!-- Results - Final Grade Only -->
     <div id="results">
-
-      <div class="result-section">
-        <h3>Advisor Grading Breakdown &nbsp;<span style="font-weight:normal;font-size:12px;">(60% of final score)</span></h3>
-        <table class="result-table">
-          <thead>
-            <tr>
-              <th style="text-align:left;">Component</th>
-              <th>Weight</th>
-              <th>Points (Grade)</th>
-              <th>Weighted Score</th>
-            </tr>
-          </thead>
-          <tbody id="adv_result_rows"></tbody>
-          <tfoot>
-            <tr class="total-row">
-              <td>Advisor Total</td>
-              <td>100%</td>
-              <td id="adv_total_letter"></td>
-              <td id="adv_total_score"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <div class="result-section">
-        <h3>Reader Grading Breakdown &nbsp;<span style="font-weight:normal;font-size:12px;">(40% of final score)</span></h3>
-        <table class="result-table">
-          <thead>
-            <tr>
-              <th style="text-align:left;">Component</th>
-              <th>Weight</th>
-              <th>Points (Grade)</th>
-              <th>Weighted Score</th>
-            </tr>
-          </thead>
-          <tbody id="read_result_rows"></tbody>
-          <tfoot>
-            <tr class="total-row">
-              <td>Reader Total</td>
-              <td>100%</td>
-              <td id="read_total_letter"></td>
-              <td id="read_total_score"></td>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-
-      <div class="result-section">
-        <h3>Final Score Calculation</h3>
-        <div class="calc-row" id="calc_adv_line"></div>
-        <div class="calc-row" id="calc_read_line"></div>
-        <hr style="margin:10px 0;border-color:#ccc;" />
+      <div class="result-section final-result">
         <div class="final-box">
           <div class="score-line" id="final_score_line"></div>
           <div class="grade-big" id="final_grade_big"></div>
           <div style="font-size:12px;color:#555;" id="final_range_line"></div>
         </div>
+        <div class="result-nav-buttons">
+          <button id="backBtn" onclick="goToMenu()">← Back to Menu</button>
+          <button onclick="resetAll()" style="padding:8px 25px;font-size:14px;font-family:inherit;cursor:pointer;background:#fff;border:1px solid #555;margin:0 5px;">Calculate Again</button>
+        </div>
       </div>
-
     </div><!-- /results -->
   </div><!-- /right-panel -->
 </div><!-- /layout -->
+</div><!-- /calculatorPage -->
 
 <script>
+  // ── Navigation functions ─────────────────────────────────────────────────
+  function goToCalculator() {
+    document.getElementById("menuPage").style.display = "none";
+    document.getElementById("calculatorPage").style.display = "block";
+    window.scrollTo(0, 0);
+  }
+
+  function goToMenu() {
+    document.getElementById("menuPage").style.display = "block";
+    document.getElementById("calculatorPage").style.display = "none";
+    document.getElementById("results").style.display = "none";
+    resetAll();
+    window.scrollTo(0, 0);
+  }
+
   // ── grade / scale data ───────────────────────────────────────────────────
   const GRADES = [
     { letter: "A+", points: 4.30 },
@@ -650,42 +778,26 @@
       }
     }
 
-    function sectionTotal(components, tbodyId, totalLetterID, totalScoreId) {
+    function sectionTotal(components) {
       let total = 0;
-      const tbody = document.getElementById(tbodyId);
-      tbody.innerHTML = "";
       for (const comp of components) {
         let compTotal = 0;
         for (const crit of comp.criteria)
           compTotal += parseFloat(document.getElementById(crit.id).value) * crit.weight;
         const weighted = compTotal * comp.compWeight;
         total += weighted;
-        const letter = pointsToLetter(compTotal);
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${comp.label}</td>
-          <td style="text-align:center">${(comp.compWeight * 100).toFixed(0)}%</td>
-          <td style="text-align:center">${compTotal.toFixed(3)} (${letter})</td>
-          <td style="text-align:center">${weighted.toFixed(4)}</td>`;
-        tbody.appendChild(tr);
       }
-      document.getElementById(totalLetterID).textContent = pointsToLetter(total);
-      document.getElementById(totalScoreId).textContent  = total.toFixed(4);
       return total;
     }
 
-    const advTotal  = sectionTotal(COMPONENTS.advisor, "adv_result_rows",  "adv_total_letter",  "adv_total_score");
-    const readTotal = sectionTotal(COMPONENTS.reader,  "read_result_rows", "read_total_letter", "read_total_score");
+    const advTotal  = sectionTotal(COMPONENTS.advisor);
+    const readTotal = sectionTotal(COMPONENTS.reader);
 
     const advContrib  = advTotal  * 0.60;
     const readContrib = readTotal * 0.40;
     const finalScore  = advContrib + readContrib;
     const finalLetter = pointsToLetter(finalScore);
 
-    document.getElementById("calc_adv_line").textContent  =
-      `Advisor contribution: ${advTotal.toFixed(4)} × 60% = ${advContrib.toFixed(4)}`;
-    document.getElementById("calc_read_line").textContent =
-      `Reader  contribution: ${readTotal.toFixed(4)} × 40% = ${readContrib.toFixed(4)}`;
     document.getElementById("final_score_line").textContent = `Final Score: ${finalScore.toFixed(4)}`;
     document.getElementById("final_grade_big").textContent  = finalLetter;
 
