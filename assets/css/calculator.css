@@ -1,0 +1,85 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   calculator.css — Calculator page, results display, final grade box
+   ────────────────────────────────────────────────────────────────────────── */
+
+#calculatorPage { display: none; }
+
+/* ── calculate button ── */
+.btn-row {
+  text-align: center;
+  margin: 12px 0 20px;
+}
+
+button#calcBtn {
+  padding: 6px 28px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+  background: #fff;
+  border: 1px solid #555;
+}
+
+button#calcBtn:hover { background: #e8e8e8; }
+
+/* ── results ── */
+#results { display: none; }
+
+.final-box {
+  border: 2px solid #555;
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 15px;
+  background: #fafafa;
+}
+
+.final-box .score-line { margin: 4px 0; }
+.final-box .grade-big  { font-size: 36px; font-weight: bold; margin: 8px 0; }
+
+.calc-row { margin: 4px 0; font-size: 13px; color: #333; }
+
+.final-result {
+  border: 2px solid #2f6f47;
+  padding: 20px;
+  background: #f0f8f5;
+  text-align: center;
+}
+
+.result-nav-buttons {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.result-nav-buttons button {
+  padding: 8px 20px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid #555;
+  background: #fff;
+}
+
+.result-nav-buttons button:hover {
+  background: #e8e8e8;
+}
+
+#backBtn {
+  background: #2f6f47;
+  color: #fff;
+  border-color: #2f6f47;
+}
+
+#backBtn:hover {
+  background: #235639;
+}
+
+/* ── style states ── */
+.pending { color: #aaa; font-style: italic; }
+.calc-grade { font-size: 15px; color: #1a5c1a; font-weight: bold; }
+
+/* ── page visibility states ── */
+.calculatorPage.show-results {
+  position: relative;
+}

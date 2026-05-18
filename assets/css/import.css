@@ -1,0 +1,87 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   import.css — Quick import box, paste textarea, parse status
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* ── quick import box ── */
+.paste-box {
+  border: 1px solid #999;
+  background: #f8fafc;
+  padding: 12px;
+  margin-bottom: 14px;
+}
+
+.paste-box h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.paste-box p {
+  font-size: 12px;
+  color: #444;
+  margin-bottom: 8px;
+}
+
+.paste-box a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+.paste-box a:hover {
+  text-decoration: underline;
+}
+
+#fypPasteInput {
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 12px;
+  border: 1px solid #999;
+  padding: 8px;
+  background: #fff;
+}
+
+.paste-actions {
+  margin-top: 8px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+#parseBtn,
+.paste-actions button {
+  padding: 7px 12px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid #666;
+  background: #fff;
+}
+
+#parseBtn {
+  background: #2f6f47;
+  color: #fff;
+  border-color: #2f6f47;
+}
+
+#parseBtn:hover {
+  background: #235639;
+}
+
+.parse-status {
+  font-size: 12px;
+  margin-top: 8px;
+  min-height: 16px;
+}
+
+.parse-status.success { color: #1f6d3f; }
+.parse-status.warn { color: #8a6200; }
+.parse-status.error { color: #a01717; }
+
+/* ── ratio labels ── */
+.ratio-note {
+  font-size: 12px;
+  color: #444;
+  margin-bottom: 4px;
+  padding-left: 2px;
+}
