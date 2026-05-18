@@ -167,10 +167,11 @@ function calculate() {
   });
   if (entry) document.getElementById(entry.rowId).classList.add("active-grade");
 
-  document.getElementById("calculatorPage").classList.add("show-results");
-  document.getElementById("results").style.display = "block";
+  document.getElementById("menuPage").style.display = "none";
+  document.getElementById("calculatorPage").style.display = "none";
+  document.getElementById("resultsPage").style.display = "block";
   history.pushState({ page: 'results' }, '', '');
-  document.getElementById("results").scrollIntoView({ behavior: "smooth" });
+  document.getElementById("resultsPage").scrollIntoView({ behavior: "smooth" });
 }
 
 function resetAll() {
@@ -184,8 +185,7 @@ function resetAll() {
       document.getElementById(`${crit.id}_pts`).textContent = "—";
     });
   });
-  document.getElementById("calculatorPage").classList.remove("show-results");
-  document.getElementById("results").style.display = "none";
+  document.getElementById("resultsPage").style.display = "none";
   SCALE.forEach(s => {
     const row = document.getElementById(s.rowId);
     if (row) row.classList.remove("active-grade");

@@ -6,6 +6,7 @@
 function goToCalculator() {
   document.getElementById("menuPage").style.display = "none";
   document.getElementById("calculatorPage").style.display = "block";
+  document.getElementById("resultsPage").style.display = "none";
   history.pushState({ page: 'calculator' }, '', '');
   window.scrollTo(0, 0);
 }
@@ -13,14 +14,15 @@ function goToCalculator() {
 function goToMenu() {
   document.getElementById("menuPage").style.display = "block";
   document.getElementById("calculatorPage").style.display = "none";
-  document.getElementById("results").style.display = "none";
+  document.getElementById("resultsPage").style.display = "none";
   history.pushState({ page: 'menu' }, '', '');
   window.scrollTo(0, 0);
 }
 
 function backToCalculator() {
-  document.getElementById("calculatorPage").classList.remove("show-results");
-  document.getElementById("results").style.display = "none";
+  document.getElementById("menuPage").style.display = "none";
+  document.getElementById("calculatorPage").style.display = "block";
+  document.getElementById("resultsPage").style.display = "none";
   history.pushState({ page: 'calculator' }, '', '');
   window.scrollTo(0, 0);
 }
@@ -64,17 +66,15 @@ window.addEventListener('popstate', e => {
   if (page === 'menu') {
     document.getElementById("menuPage").style.display = "block";
     document.getElementById("calculatorPage").style.display = "none";
-    document.getElementById("results").style.display = "none";
+    document.getElementById("resultsPage").style.display = "none";
   } else if (page === 'calculator') {
     document.getElementById("menuPage").style.display = "none";
     document.getElementById("calculatorPage").style.display = "block";
-    document.getElementById("calculatorPage").classList.remove("show-results");
-    document.getElementById("results").style.display = "none";
+    document.getElementById("resultsPage").style.display = "none";
   } else if (page === 'results') {
     document.getElementById("menuPage").style.display = "none";
-    document.getElementById("calculatorPage").style.display = "block";
-    document.getElementById("calculatorPage").classList.add("show-results");
-    document.getElementById("results").style.display = "block";
+    document.getElementById("calculatorPage").style.display = "none";
+    document.getElementById("resultsPage").style.display = "block";
   }
   window.scrollTo(0, 0);
 });
