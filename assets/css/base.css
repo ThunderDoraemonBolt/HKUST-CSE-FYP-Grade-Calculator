@@ -22,7 +22,7 @@ h1 {
 hr { border: none; border-top: 1px solid #000; margin-bottom: 20px; }
 
 /* ── HKUST header ── */
-.hkust {
+h1.hkust {
   font-size: 11px;
   font-weight: normal;
   font-style: italic;
@@ -32,7 +32,7 @@ hr { border: none; border-top: 1px solid #000; margin-bottom: 20px; }
   letter-spacing: 0.3px;
 }
 
-.dept {
+h1.dept {
   font-size: 13px;
   font-weight: normal;
   text-align: center;
@@ -40,7 +40,7 @@ hr { border: none; border-top: 1px solid #000; margin-bottom: 20px; }
   color: #444;
 }
 
-.subtitle {
+h2.subtitle {
   text-align: center;
   font-size: 20px;
   font-weight: bold;
