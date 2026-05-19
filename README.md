@@ -113,9 +113,34 @@ Boundary handling note: the calculator classifies grades using the displayed 4-d
 
 ## File Information
 
-- **File**: `index.html`
-- **Size**: Single HTML file (self-contained)
-- **No installation required**: Simply open in a web browser
+- Main entry: index.html
+- Assets: assets/css and assets/js
+- SEO files: robots.txt and sitemap.xml
+- No installation required: simply open in a web browser
+
+---
+
+## SEO Deployment Checklist
+
+The project now includes on-page SEO improvements for discoverability:
+- Target title: HKUST CSE FYP Grade Calculator
+- Search description meta tag
+- Canonical URL
+- Open Graph and Twitter preview tags
+- Structured data (WebApplication JSON-LD)
+- robots.txt and sitemap.xml
+
+Complete these remaining external steps in Google Search Console:
+1. Add property: https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/
+2. Verify ownership using either HTML tag or HTML file method
+3. Submit sitemap: https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/sitemap.xml
+4. Use URL Inspection for the homepage and click Request Indexing
+5. Re-check indexing status after a few days
+
+Off-page relevance actions:
+1. Add repository About tags: hkust, cse, fyp, grade-calculator
+2. Link this page from your GitHub profile README or portfolio
+3. Share to HKUST communities where relevant
 
 ---
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://thunderdoraemonbolt.github.io/HKUST-CSE-FYP-Grade-Calculator/sitemap.xml
