@@ -11,8 +11,8 @@
 }
 
 button#calcBtn {
-  padding: 6px 28px;
-  font-size: 14px;
+  padding: 8px 32px;
+  font-size: 16px;
   font-family: inherit;
   cursor: pointer;
   background: #fff;
@@ -28,14 +28,14 @@ button#calcBtn:hover { background: #e8e8e8; }
   border: 2px solid #555;
   padding: 14px 20px;
   text-align: center;
-  font-size: 15px;
+  font-size: 17px;
   background: #fafafa;
 }
 
 .final-box .score-line { margin: 4px 0; }
-.final-box .grade-big  { font-size: 36px; font-weight: bold; margin: 8px 0; }
+.final-box .grade-big  { font-size: 40px; font-weight: bold; margin: 8px 0; }
 
-.calc-row { margin: 4px 0; font-size: 13px; color: #333; }
+.calc-row { margin: 4px 0; font-size: 15px; color: #333; }
 
 .final-result {
   border: 2px solid #2f6f47;
@@ -56,7 +56,7 @@ button#calcBtn:hover { background: #e8e8e8; }
 
 .result-nav-buttons button {
   padding: 8px 20px;
-  font-size: 13px;
+  font-size: 15px;
   font-family: inherit;
   cursor: pointer;
   border: 1px solid #555;
@@ -79,4 +79,4 @@ button#calcBtn:hover { background: #e8e8e8; }
 
 /* ── style states ── */
 .pending { color: #aaa; font-style: italic; }
-.calc-grade { font-size: 15px; color: #1a5c1a; font-weight: bold; }
+.calc-grade { font-size: 17px; color: #1a5c1a; font-weight: bold; }

@@ -10,7 +10,7 @@
 }
 
 .scale-box h3 {
-  font-size: 13px;
+  font-size: 15px;
   font-weight: bold;
   margin-bottom: 8px;
   text-align: center;
@@ -21,7 +21,7 @@
 .scale-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .scale-table th {
@@ -48,7 +48,7 @@
 /* ── grading panels ── */
 .section-title {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 16px;
   background: #d9d9d9;
   padding: 5px 10px;
   border: 1px solid #999;
@@ -59,7 +59,7 @@
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .grade-table th {
@@ -67,7 +67,7 @@
   padding: 5px 8px;
   border: 1px solid #aaa;
   text-align: center;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .grade-table td {
@@ -81,9 +81,9 @@
 .grade-table td:nth-child(4) { text-align: center; width: 100px; color: #555; }
 
 .grade-table select {
-  width: 90px;
-  padding: 2px 4px;
-  font-size: 13px;
+  width: 100px;
+  padding: 3px 4px;
+  font-size: 15px;
   font-family: inherit;
   border: 1px solid #aaa;
 }
@@ -103,7 +103,7 @@
 
 .auto-note {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: normal;
   color: #777;
   font-style: italic;
@@ -115,13 +115,13 @@
 
 .sub-cell {
   padding-left: 22px !important;
-  font-size: 12px;
+  font-size: 14px;
   color: #444;
   border-left: 3px solid #b0c8e0 !important;
   font-style: italic;
 }
 
-.sub-wt-cell { font-size: 11px; color: #666; font-weight: bold; text-align: center; }
+.sub-wt-cell { font-size: 13px; color: #666; font-weight: bold; text-align: center; }
 .tcenter { text-align: center; }
 
 /* ── result tables ── */
@@ -129,11 +129,11 @@
   border: 1px solid #aaa;
   padding: 12px 16px;
   margin-bottom: 16px;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .result-section h3 {
-  font-size: 14px;
+  font-size: 16px;
   margin-bottom: 10px;
   border-bottom: 1px solid #ccc;
   padding-bottom: 4px;
@@ -142,7 +142,7 @@
 .result-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 13px;
+  font-size: 15px;
 }
 
 .result-table th {
